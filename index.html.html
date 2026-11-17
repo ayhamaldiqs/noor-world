@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>عالم نور السحري – Noor's Magical Garden</title>
+
+  <!-- استيراد خطوط جوجل العربية الاحترافية: Tajawal & Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS للتنسيق المتجاوب السريع والمرن -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            tajawal: ['Tajawal', 'sans-serif'],
+            cairo: ['Cairo', 'sans-serif'],
+          },
+          colors: {
+            navyDeep: '#07091e',
+            navyMid: '#0d1233',
+            magicPurple: '#2a114b',
+            royalPurple: '#6b21a8',
+            lavenderGlow: '#c084fc',
+            lavenderSoft: '#e9d5ff',
+            softPink: '#f472b6',
+            blushPink: '#fbcfe8',
+            glowWhite: '#fdf4ff',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* ==========================================================================
+       الهوية البصرية والمتغيرات العامة - Magical Fantasy Design System
+       ========================================================================== */
+    :root {
+      --bg-navy-deep: #07091e;
+      --bg-navy-mid: #0d1233;
+      --bg-purple: #2a114b;
+      --accent-purple: #6b21a8;
+      --accent-lavender: #c084fc;
+      --accent-pink: #f472b6;
+      --text-white: #fdf4ff;
+      --glass-bg: rgba(18, 14, 46, 0.62);
+      --glass-border: rgba(233, 213, 255, 0.22);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: radial-gradient(ellipse at top, #1b1042 0%, #0d1233 48%, #07091e 100%);
+      color: var(--text-white);
+      font-family: 'Tajawal', 'Cairo', sans-serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    h1, h2, h3, .font-heading {
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+    }
+
+    /* خلفية الكانفاس التفاعلية (النجوم، اليراعات، بتلات الورد، والاحتفالات) */
+    #ambientCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* طبقة الإضاءة الضبابية الناعمة */
+    .nebula-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(192, 132, 252, 0.14) 0%, transparent 45%),
+        radial-gradient(circle at 82% 28%, rgba(244, 114, 182, 0.13) 0%, transparent 48%),
+        radial-gradient(circle at 50% 85%, rgba(107, 33, 168, 0.22) 0%, transparent 55%);
+    }
+
+    /* البطاقات الزجاجية السحرية */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--glass-border);
+      box-shadow:
+        0 12px 40px rgba(7, 9, 30, 0.65),
+        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    }
+
+    .glow-text {
+      text-shadow:
+        0 0 14px rgba(233, 213, 255, 0.55),
+        0 0 32px rgba(244, 114, 182, 0.35);
+    }
+
+    /* الأزرار السحرية */
+    .magic-btn {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #7e22ce 0%, #c026d3 50%, #ec4899 100%);
+      border: 1px solid rgba(251, 207, 232, 0.45);
+      box-shadow:
+        0 6px 24px rgba(192, 132, 252, 0.38),
+        inset 0 1px 1px rgba(255, 255, 255, 0.35);
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
+      cursor: pointer;
+    }
+
+    .magic-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow:
+        0 10px 32px rgba(244, 114, 182, 0.55),
+        0 0 18px rgba(192, 132, 252, 0.45);
+    }
+
+    .magic-btn:active {
+      transform: scale(0.98);
+    }
+
+    .magic-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+      transform: rotate(25deg);
+      animation: btnShimmer 4.5s infinite;
+    }
+
+    @keyframes btnShimmer {
+      0%, 65% { left: -60%; }
+      100% { left: 130%; }
+    }
+
+    /* انتقالات الشاشات الخمس */
+    .screen-section {
+      display: none;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      z-index: 10;
+    }
+
+    .screen-section.active {
+      display: flex;
+    }
+
+    .screen-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       حركات العناصر السحرية (القمر، البوابة، الورود، الفراشات، النجوم، القلب الكريستالي)
+       ========================================================================== */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes swayBreeze {
+      0%, 100% { transform: rotate(-2.5deg); }
+      50% { transform: rotate(2.5deg); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% {
+        filter: drop-shadow(0 0 12px rgba(233, 213, 255, 0.55)) drop-shadow(0 0 26px rgba(244, 114, 182, 0.35));
+        transform: scale(1);
+      }
+      50% {
+        filter: drop-shadow(0 0 20px rgba(244, 114, 182, 0.85)) drop-shadow(0 0 38px rgba(192, 132, 252, 0.65));
+        transform: scale(1.04);
+      }
+    }
+
+    .float-slow { animation: floatSlow 5.5s ease-in-out infinite; }
+    .sway-breeze { transform-origin: bottom center; animation: swayBreeze 4.8s ease-in-out infinite; }
+    .pulse-glow { animation: pulseGlow 3.6s ease-in-out infinite; }
+
+    /* البوابة السحرية في الشاشة الأولى */
+    .gate-container {
+      perspective: 1100px;
+    }
+
+    .gate-door-left, .gate-door-right {
+      transition: transform 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .gate-door-left { transform-origin: left center; }
+    .gate-door-right { transform-origin: right center; }
+
+    .gate-opened .gate-door-left {
+      transform: rotateY(-108deg);
+    }
+
+    .gate-opened .gate-door-right {
+      transform: rotateY(108deg);
+    }
+
+    .gate-light-burst {
+      opacity: 0;
+      transform: scale(0.4);
+      transition: opacity 0.9s ease, transform 1.1s ease;
+    }
+
+    .gate-opened .gate-light-burst {
+      opacity: 1;
+      transform: scale(1.45);
+    }
+
+    /* تفتح الورود في الحديقة */
+    .rose-item {
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.5s ease;
+      cursor: pointer;
+    }
+
+    .rose-item:hover {
+      transform: scale(1.08) translateY(-4px);
+    }
+
+    .rose-item.bloomed {
+      transform: scale(1.18) translateY(-6px);
+      filter: drop-shadow(0 0 18px rgba(244, 114, 182, 0.95)) drop-shadow(0 0 32px rgba(192, 132, 252, 0.75));
+    }
+
+    .rose-petal-outer {
+      transition: transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: center;
+    }
+
+    .rose-item.bloomed .rose-petal-outer {
+      transform: scale(1.22) rotate(14deg);
+    }
+
+    /* الفراشات المضيئة */
+    @keyframes butterflyFlutter {
+      0%, 100% { transform: translate(0, 0) rotate(-4deg); }
+      25% { transform: translate(16px, -14px) rotate(6deg); }
+      50% { transform: translate(32px, -4px) rotate(-3deg); }
+      75% { transform: translate(14px, 10px) rotate(5deg); }
+    }
+
+    @keyframes wingFlap {
+      0%, 100% { transform: scaleX(1); }
+      50% { transform: scaleX(0.35); }
+    }
+
+    .butterfly-path {
+      animation: butterflyFlutter 9s ease-in-out infinite;
+    }
+
+    .butterfly-wings {
+      transform-origin: center;
+      animation: wingFlap 0.32s ease-in-out infinite;
+    }
+
+    /* لعبة تطابق القلوب (3D Flip Cards) */
+    .memory-card {
+      perspective: 900px;
+      aspect-ratio: 1 / 1;
+      cursor: pointer;
+    }
+
+    .memory-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-style: preserve-3d;
+    }
+
+    .memory-card.flipped .memory-card-inner,
+    .memory-card.matched .memory-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .memory-card-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .memory-card-back {
+      background: linear-gradient(145deg, rgba(42, 17, 75, 0.9), rgba(13, 18, 51, 0.95));
+      border: 1px solid rgba(192, 132, 252, 0.38);
+      box-shadow: 0 6px 18px rgba(7, 9, 30, 0.55), inset 0 0 14px rgba(192, 132, 252, 0.16);
+    }
+
+    .memory-card-front {
+      transform: rotateY(180deg);
+      background: linear-gradient(145deg, rgba(107, 33, 168, 0.72), rgba(244, 114, 182, 0.35));
+      border: 1px solid rgba(251, 207, 232, 0.55);
+      box-shadow: 0 0 20px rgba(244, 114, 182, 0.35);
+    }
+
+    .memory-card.matched .memory-card-front {
+      background: linear-gradient(145deg, rgba(147, 51, 234, 0.85), rgba(236, 72, 153, 0.65));
+      box-shadow: 0 0 26px rgba(244, 114, 182, 0.7);
+      border-color: #fdf4ff;
+    }
+
+    /* النجوم التفاعلية في سماء الأمنيات */
+    .wishing-star-btn {
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
+      cursor: pointer;
+    }
+
+    .wishing-star-btn:hover,
+    .wishing-star-btn.active-star {
+      transform: scale(1.38);
+      filter: drop-shadow(0 0 16px #fff) drop-shadow(0 0 28px #f472b6);
+    }
+
+    /* القلب الكريستالي في الشاشة الخامسة */
+    .crystal-heart-wrap {
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.8s ease;
+    }
+
+    .crystal-heart-wrap.awakened {
+      transform: scale(1.16);
+      filter: drop-shadow(0 0 28px rgba(244, 114, 182, 0.95)) drop-shadow(0 0 55px rgba(192, 132, 252, 0.85));
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.08); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.05); }
+      70% { transform: scale(1); }
+    }
+
+    .heart-beat {
+      animation: heartBeat 2.6s ease-in-out infinite;
+    }
+
+    /* مراعاة إعدادات تقليل الحركة للمستخدمين */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.15ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-pink-500/40 selection:text-white">
+
+  <!-- الطبقة الضبابية والكانفاس السحري -->
+  <div class="nebula-overlay"></div>
+  <canvas id="ambientCanvas"></canvas>
+
+  <!-- ==========================================================================
+       شريط التنقل العلوي للكمبيوتر (Desktop Top Glassmorphic Navbar)
+       ========================================================================== -->
+  <header class="fixed top-0 inset-x-0 z-40 hidden md:block px-6 pt-3">
+    <div class="max-w-6xl mx-auto glass-card rounded-2xl px-5 py-2.5 flex items-center justify-between gap-4">
+      <!-- شعار عالم نور -->
+      <div class="flex items-center gap-2.5">
+        <span class="text-2xl">🌙</span>
+        <div>
+          <span class="font-heading font-bold text-base text-lavenderSoft tracking-wide">عالم نور السحري</span>
+          <span class="block text-[11px] text-pink-200/80" id="desktopProgressLabel">المرحلة 1 من 5</span>
+        </div>
+      </div>
+
+      <!-- روابط الشاشات الخمس -->
+      <nav aria-label="التنقل الرئيسي" class="flex items-center gap-1.5" id="desktopNavItems"></nav>
+
+      <!-- أزرار السابق / التالي + التحكم بالموسيقى -->
+      <div class="flex items-center gap-2">
+        <button id="desktopPrevBtn" type="button" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-lavenderSoft border border-white/15 transition disabled:opacity-35 disabled:pointer-events-none">
+          → السابق
+        </button>
+        <button id="desktopNextBtn" type="button" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-purple-600/50 hover:bg-purple-500/70 text-white border border-purple-300/30 transition disabled:opacity-35 disabled:pointer-events-none">
+          التالي ←
+        </button>
+      </div>
+    </div>
+    <!-- شريط التقدم الرفيع -->
+    <div class="max-w-6xl mx-auto mt-1.5 px-2">
+      <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+        <div id="desktopProgressBar" class="h-full bg-gradient-to-l from-pink-400 via-purple-400 to-indigo-400 transition-all duration-500 rounded-full" style="width: 20%;"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       وحدة التحكم العائمة بالموسيقى الهادئة (Ambient Piano Audio Pill)
+       ========================================================================== -->
+  <div class="fixed top-3 left-3 md:top-20 md:left-6 z-40">
+    <div class="glass-card rounded-full px-3 py-1.5 flex items-center gap-2.5 shadow-lg">
+      <button id="musicToggleBtn" type="button" aria-label="تشغيل أو إيقاف الموسيقى" class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center text-white text-sm shadow hover:scale-105 transition">
+        <span id="musicIcon">🔇</span>
+      </button>
+      <span id="musicStatusText" class="text-xs text-lavenderSoft font-medium hidden sm:inline">موسيقى هادئة</span>
+      <input id="volumeSlider" type="range" min="0" max="100" value="25" aria-label="مستوى الصوت" class="w-16 sm:w-20 accent-pink-400 cursor-pointer h-1.5 bg-white/20 rounded-lg" />
+    </div>
+  </div>
+
+  <!-- مؤشر التقدم العلوي للهواتف -->
+  <div class="fixed top-0 inset-x-0 z-30 md:hidden">
+    <div class="w-full h-1 bg-white/10">
+      <div id="mobileProgressBar" class="h-full bg-gradient-to-l from-pink-400 via-purple-400 to-indigo-400 transition-all duration-500" style="width: 20%;"></div>
+    </div>
+    <div class="px-4 pt-3.5 flex justify-end">
+      <span id="mobileProgressBadge" class="glass-card px-3 py-1 rounded-full text-[11px] text-lavenderSoft font-semibold">
+        1 / 5
+      </span>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       الحاوية الرئيسية للشاشات الخمس (Main Single-Page Experience)
+       ========================================================================== -->
+  <main class="relative z-10 min-h-screen min-h-dvh flex flex-col justify-center pt-16 pb-28 md:pt-24 md:pb-12 px-4 sm:px-6">
+
+    <!-- ========================================================================
+         الشاشة الأولى: بوابة عالم نور (SCREEN 1: THE MAGICAL GATE)
+         ======================================================================== -->
+    <section id="screen-1" class="screen-section active visible flex-col items-center justify-center text-center max-w-3xl mx-auto w-full my-auto">
+      <!-- القمر المضيء في السماء -->
+      <div class="relative mb-3 float-slow">
+        <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-amber-50 via-purple-100 to-pink-200 shadow-[0_0_55px_rgba(253,244,255,0.75)] flex items-center justify-center relative">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-amber-50/40 blur-sm"></div>
+        </div>
+      </div>
+
+      <!-- البوابة السحرية التفاعلية (SVG) -->
+      <div id="magicalGateWrapper" class="gate-container relative w-64 h-64 sm:w-72 sm:h-72 mx-auto my-2 flex items-center justify-center">
+        <!-- هالة الضوء المنبعثة عند فتح البوابة -->
+        <div class="gate-light-burst absolute inset-6 rounded-full bg-gradient-to-t from-pink-400/70 via-purple-300/80 to-white blur-xl pointer-events-none"></div>
+
+        <svg viewBox="0 0 260 260" class="w-full h-full overflow-visible drop-shadow-[0_0_25px_rgba(192,132,252,0.5)]">
+          <defs>
+            <linearGradient id="archGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f472b6" />
+              <stop offset="50%" stop-color="#c084fc" />
+              <stop offset="100%" stop-color="#818cf8" />
+            </linearGradient>
+            <radialGradient id="portalInnerGrad" cx="50%" cy="55%" r="55%">
+              <stop offset="0%" stop-color="#fdf4ff" stop-opacity="0.95" />
+              <stop offset="45%" stop-color="#e879f9" stop-opacity="0.55" />
+              <stop offset="100%" stop-color="#2a114b" stop-opacity="0.2" />
+            </radialGradient>
+          </defs>
+
+          <!-- نور داخلي خلف البوابة -->
+          <path d="M 55 235 L 55 115 A 75 75 0 0 1 205 115 L 205 235 Z" fill="url(#portalInnerGrad)" />
+
+          <!-- دفتا البوابة القابلتان للفتح -->
+          <g class="gate-door-left">
+            <path d="M 58 232 L 58 115 A 72 72 0 0 1 130 43 L 130 232 Z" fill="rgba(26, 16, 64, 0.88)" stroke="url(#archGrad)" stroke-width="2.5" />
+            <circle cx="118" cy="145" r="4" fill="#fbcfe8" />
+            <path d="M 75 215 L 75 120 A 52 52 0 0 1 120 68" fill="none" stroke="rgba(233,213,255,0.35)" stroke-width="1.5" stroke-dasharray="4 4" />
+          </g>
+
+          <g class="gate-door-right">
+            <path d="M 202 232 L 202 115 A 72 72 0 0 0 130 43 L 130 232 Z" fill="rgba(26, 16, 64, 0.88)" stroke="url(#archGrad)" stroke-width="2.5" />
+            <circle cx="142" cy="145" r="4" fill="#fbcfe8" />
+            <path d="M 185 215 L 185 120 A 52 52 0 0 0 140 68" fill="none" stroke="rgba(233,213,255,0.35)" stroke-width="1.5" stroke-dasharray="4 4" />
+          </g>
+
+          <!-- الإطار الخارجي المزخرف للبوابة -->
+          <path d="M 48 238 L 48 115 A 82 82 0 0 1 212 115 L 212 238" fill="none" stroke="url(#archGrad)" stroke-width="5" stroke-linecap="round" />
+          <path d="M 38 238 L 222 238" stroke="url(#archGrad)" stroke-width="4" stroke-linecap="round" />
+          <!-- نجمة تاج البوابة -->
+          <text x="130" y="25" text-anchor="middle" font-size="18" fill="#fdf4ff">✨</text>
+        </svg>
+      </div>
+
+      <!-- النص الترحيبي والزر الرئيسي -->
+      <div class="glass-card rounded-3xl px-6 py-6 sm:px-10 sm:py-8 mt-2 max-w-xl w-full">
+        <h1 id="gateWelcomeTitle" class="text-2xl sm:text-4xl font-extrabold text-white glow-text leading-relaxed mb-3">
+          مرحباً بكِ في عالمك السحري يا نور
+        </h1>
+        <p id="gateSubtitle" class="text-sm sm:text-base text-lavenderSoft/90 mb-6 leading-relaxed">
+          عالم صغير صُنع بكل حب ليحمل لكِ الورود، النجوم، وأجمل اللحظات...
+        </p>
+        <button id="enterWorldBtn" type="button" class="magic-btn px-8 py-3.5 rounded-full text-base sm:text-lg font-bold text-white inline-flex items-center gap-2">
+          <span id="gateButtonLabel">اكتشفي عالمك ✨</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         الشاشة الثانية: حديقة نور السحرية (SCREEN 2: NOOR'S MAGICAL GARDEN)
+         ======================================================================== -->
+    <section id="screen-2" class="screen-section flex-col items-center justify-between max-w-5xl mx-auto w-full my-auto">
+      <div class="text-center mb-4">
+        <span class="inline-block px-3.5 py-1 rounded-full text-xs font-semibold bg-pink-500/20 text-pink-200 border border-pink-400/30 mb-2">
+          🌸 المحطة الثانية
+        </span>
+        <h2 id="gardenTitle" class="text-2xl sm:text-4xl font-extrabold text-white glow-text">
+          حديقة نور السحرية
+        </h2>
+        <p id="gardenHint" class="text-xs sm:text-sm text-lavenderSoft/85 mt-1.5">
+          المسي الورود المضيئة لتتفتح وتبوح لكِ بما في القلب، أو اجعلي الحديقة بأكملها تزهر
+        </p>
+      </div>
+
+      <!-- بطاقة الرسالة الرومانسية المنبثقة عند لمس وردة -->
+      <div id="gardenMessageCard" class="glass-card rounded-2xl px-6 py-4 max-w-lg w-full text-center mb-5 transition-all duration-500 border-pink-300/40">
+        <div class="text-xl mb-1" id="gardenCardIcon">🌷</div>
+        <p id="gardenMessageText" class="text-base sm:text-lg font-bold text-pink-100 leading-relaxed">
+          اختاري إحدى الورود المتألقة في الحديقة لتقرئي رسالتها...
+        </p>
+        <span id="gardenRoseCounter" class="block text-[11px] text-lavenderSoft/75 mt-1.5">
+          الورود المتفتحة: 0 / 3
+        </span>
+      </div>
+
+      <!-- مساحة الحديقة التفاعلية مع الفراشات والورود -->
+      <div class="relative w-full max-w-4xl glass-card rounded-3xl p-5 sm:p-8 overflow-hidden border-purple-300/25">
+        <!-- فراشتان مضيئتان تتحركان فوق الورود -->
+        <div class="butterfly-path absolute top-6 right-10 pointer-events-none z-20" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 40 40" class="butterfly-wings drop-shadow-[0_0_10px_#f472b6]">
+            <path d="M20 20 C8 6, 2 14, 10 22 C4 28, 12 34, 20 24 Z" fill="#f472b6" opacity="0.85" />
+            <path d="M20 20 C32 6, 38 14, 30 22 C36 28, 28 34, 20 24 Z" fill="#c084fc" opacity="0.85" />
+          </svg>
+        </div>
+        <div class="butterfly-path absolute top-12 left-12 pointer-events-none z-20" style="animation-delay: -3.5s;" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 40 40" class="butterfly-wings drop-shadow-[0_0_10px_#c084fc]">
+            <path d="M20 20 C8 6, 2 14, 10 22 C4 28, 12 34, 20 24 Z" fill="#e9d5ff" opacity="0.9" />
+            <path d="M20 20 C32 6, 38 14, 30 22 C36 28, 28 34, 20 24 Z" fill="#f472b6" opacity="0.9" />
+          </svg>
+        </div>
+
+        <!-- شبكة الورود الثلاث التفاعلية + ورود زينة متمايلة -->
+        <div class="grid grid-cols-3 gap-3 sm:gap-8 items-end justify-items-center pt-6 pb-2 relative z-10" id="rosesContainer">
+          <!-- يتم توليد الورود التفاعلية برمجياً من كائن البيانات -->
+        </div>
+
+        <!-- عشب ليلي متوهج أسفل الحديقة -->
+        <div class="mt-3 h-3 w-full rounded-full bg-gradient-to-r from-purple-900/50 via-pink-500/30 to-purple-900/50 blur-[2px]"></div>
+      </div>
+
+      <!-- أزرار التحكم بالحديقة والانتقال -->
+      <div class="flex flex-wrap items-center justify-center gap-3 mt-6">
+        <button id="bloomAllBtn" type="button" class="magic-btn px-6 py-3 rounded-full text-sm sm:text-base font-bold text-white">
+          اجعلي الحديقة تتفتح 🌷
+        </button>
+        <button type="button" data-goto="3" class="px-5 py-3 rounded-full text-sm font-semibold bg-white/10 hover:bg-white/20 text-lavenderSoft border border-white/20 transition">
+          تابعي الرحلة ←
+        </button>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         الشاشة الثالثة: لعبة تطابق القلوب (SCREEN 3: HEART MEMORY GAME)
+         ======================================================================== -->
+    <section id="screen-3" class="screen-section flex-col items-center justify-center max-w-3xl mx-auto w-full my-auto">
+      <div class="text-center mb-4">
+        <span class="inline-block px-3.5 py-1 rounded-full text-xs font-semibold bg-purple-500/25 text-purple-200 border border-purple-400/30 mb-2">
+          💜 المحطة الثالثة
+        </span>
+        <h2 id="gameTitle" class="text-2xl sm:text-3xl font-extrabold text-white glow-text">
+          لعبة تطابق القلوب
+        </h2>
+        <p class="text-xs sm:text-sm text-lavenderSoft/85 mt-1">
+          اجمعي كل زوجين متشابهين من الرموز السحرية
+        </p>
+      </div>
+
+      <!-- لوحة الإحصائيات: المحاولات، المؤقت، الأزواج المكتشفة -->
+      <div class="grid grid-cols-3 gap-2.5 sm:gap-4 w-full max-w-md mb-4">
+        <div class="glass-card rounded-2xl py-2.5 px-3 text-center">
+          <span class="block text-[11px] text-lavenderSoft/75">المحاولات</span>
+          <strong id="gameMoves" class="text-lg sm:text-xl font-bold text-white">0</strong>
+        </div>
+        <div class="glass-card rounded-2xl py-2.5 px-3 text-center">
+          <span class="block text-[11px] text-lavenderSoft/75">الوقت</span>
+          <strong id="gameTimer" class="text-lg sm:text-xl font-bold text-pink-200">00:00</strong>
+        </div>
+        <div class="glass-card rounded-2xl py-2.5 px-3 text-center">
+          <span class="block text-[11px] text-lavenderSoft/75">الأزواج</span>
+          <strong id="gamePairs" class="text-lg sm:text-xl font-bold text-purple-200">0 / 6</strong>
+        </div>
+      </div>
+
+      <!-- رسالة الفوز الاحتفالية -->
+      <div id="gameWinBanner" class="hidden glass-card rounded-2xl p-4 sm:p-5 mb-4 max-w-md w-full text-center border-pink-400/60 bg-gradient-to-r from-purple-900/75 to-pink-900/65">
+        <p id="gameWinText" class="text-lg sm:text-xl font-extrabold text-white glow-text mb-3">
+          يا سلام عليكِ يا نور! فزتِ باللعبة! 💜
+        </p>
+        <button type="button" data-goto="4" class="magic-btn px-6 py-2.5 rounded-full text-sm font-bold text-white">
+          انتقلي إلى سماء الأمنيات ✨
+        </button>
+      </div>
+
+      <!-- شبكة الـ 12 بطاقة (6 أزواج) -->
+      <div id="memoryGrid" class="grid grid-cols-4 gap-2.5 sm:gap-3.5 w-full max-w-md mx-auto">
+        <!-- يتم توليد البطاقات عبر JavaScript -->
+      </div>
+
+      <!-- أزرار إعادة اللعب أو تخطي اللعبة بسلاسة -->
+      <div class="flex flex-wrap items-center justify-center gap-3 mt-5">
+        <button id="resetGameBtn" type="button" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 transition">
+          🔄 إعادة اللعب
+        </button>
+        <button type="button" data-goto="4" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-purple-600/35 hover:bg-purple-600/55 text-lavenderSoft border border-purple-300/30 transition">
+          تخطي اللعبة ومتابعة الرحلة ←
+        </button>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         الشاشة الرابعة: سماء الأمنيات (SCREEN 4: THE WISHING STARS)
+         ======================================================================== -->
+    <section id="screen-4" class="screen-section flex-col items-center justify-center max-w-4xl mx-auto w-full my-auto">
+      <div class="text-center mb-4">
+        <span class="inline-block px-3.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/25 text-indigo-200 border border-indigo-400/30 mb-2">
+          🌠 المحطة الرابعة
+        </span>
+        <h2 id="wishesMainPrompt" class="text-2xl sm:text-4xl font-extrabold text-white glow-text leading-snug">
+          لكل شخص أمنية جميلة، شو أمنيتك يا نور؟
+        </h2>
+        <p class="text-xs sm:text-sm text-lavenderSoft/85 mt-1.5">
+          المسي أي نجمة متلألئة في السماء لتضيء لكِ بأمنية دافئة
+        </p>
+      </div>
+
+      <!-- سماء النجوم التفاعلية -->
+      <div id="starrySkyBox" class="relative w-full h-64 sm:h-72 glass-card rounded-3xl overflow-hidden border-indigo-300/25 mb-5">
+        <!-- قمر رقيق في زاوية السماء -->
+        <div class="absolute top-5 left-6 w-12 h-12 rounded-full bg-gradient-to-tr from-amber-100 to-white shadow-[0_0_30px_rgba(255,255,255,0.7)] opacity-90 pointer-events-none"></div>
+
+        <!-- حاوية النجوم القابلة للضغط -->
+        <div id="wishingStarsContainer" class="absolute inset-0"></div>
+      </div>
+
+      <!-- بطاقة عرض الأمنية المختارة -->
+      <div class="glass-card rounded-2xl px-6 py-5 max-w-xl w-full text-center mb-5 border-purple-300/35">
+        <span class="text-2xl block mb-1.5" id="wishStarEmoji">⭐</span>
+        <p id="wishMessageDisplay" class="text-base sm:text-xl font-bold text-lavenderSoft leading-relaxed">
+          اختاري نجمة من السماء أعلاه لتكتشفي أمنيتك...
+        </p>
+      </div>
+
+      <!-- أزرار اكتشاف أمنية أخرى والانتقال للمفاجأة الأخيرة -->
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <button id="anotherWishBtn" type="button" class="magic-btn px-6 py-3 rounded-full text-sm sm:text-base font-bold text-white">
+          أريد أمنية أخرى ✨
+        </button>
+        <button type="button" data-goto="5" class="px-5 py-3 rounded-full text-sm font-semibold bg-white/10 hover:bg-white/20 text-lavenderSoft border border-white/20 transition">
+          إلى المفاجأة الأخيرة ←
+        </button>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         الشاشة الخامسة: المفاجأة الأخيرة (SCREEN 5: THE FINAL SURPRISE)
+         ======================================================================== -->
+    <section id="screen-5" class="screen-section flex-col items-center justify-center max-w-3xl mx-auto w-full my-auto text-center">
+      <span class="inline-block px-3.5 py-1 rounded-full text-xs font-semibold bg-pink-500/25 text-pink-200 border border-pink-400/35 mb-3">
+        ❤️ المحطة الأخيرة
+      </span>
+
+      <!-- القلب الكريستالي المضيء في المنتصف -->
+      <div id="crystalHeartContainer" class="crystal-heart-wrap relative my-3 flex items-center justify-center">
+        <div class="absolute w-40 h-40 rounded-full bg-pink-500/25 blur-2xl animate-pulse"></div>
+        <svg viewBox="0 0 200 185" class="w-36 h-36 sm:w-44 sm:h-44 heart-beat drop-shadow-[0_0_24px_rgba(244,114,182,0.85)]">
+          <defs>
+            <linearGradient id="crystalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fdf4ff" />
+              <stop offset="35%" stop-color="#f472b6" />
+              <stop offset="75%" stop-color="#a855f7" />
+              <stop offset="100%" stop-color="#4c1d95" />
+            </linearGradient>
+            <linearGradient id="crystalFacet" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.1" />
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="0.65" />
+            </linearGradient>
+          </defs>
+          <!-- شكل القلب الكريستالي متعدد الأوجه -->
+          <path d="M100 172 C100 172 18 118 18 60 C18 32 40 12 66 12 C83 12 95 22 100 34 C105 22 117 12 134 12 C160 12 182 32 182 60 C182 118 100 172 100 172 Z" fill="url(#crystalGrad)" stroke="#fbcfe8" stroke-width="2" />
+          <!-- انعكاسات كريستالية داخلية -->
+          <polygon points="100,34 66,12 45,58 100,82" fill="url(#crystalFacet)" />
+          <polygon points="100,34 134,12 155,58 100,82" fill="rgba(255,255,255,0.22)" />
+          <polygon points="45,58 100,82 100,172 18,60" fill="rgba(255,255,255,0.12)" />
+          <polygon points="155,58 100,82 100,172 182,60" fill="rgba(76,29,149,0.25)" />
+        </svg>
+      </div>
+
+      <!-- العبارة التمهيدية وزر اكتشاف المفاجأة -->
+      <div id="finalIntroBox" class="glass-card rounded-3xl px-6 py-6 sm:px-10 sm:py-8 max-w-xl w-full mt-2">
+        <h2 id="finalLeadText" class="text-2xl sm:text-3xl font-extrabold text-white glow-text mb-5">
+          وصلتي لنهاية رحلتك يا نور...
+        </h2>
+        <button id="revealSurpriseBtn" type="button" class="magic-btn px-8 py-4 rounded-full text-base sm:text-lg font-bold text-white">
+          اكتشفي مفاجأتك ❤️
+        </button>
+      </div>
+
+      <!-- الرسالة الختامية الكبيرة (تظهر عند الضغط على زر المفاجأة) -->
+      <div id="finalLetterBox" class="hidden glass-card rounded-3xl px-6 py-7 sm:px-10 sm:py-9 max-w-2xl w-full mt-3 border-pink-300/50 bg-gradient-to-b from-purple-950/80 to-indigo-950/85 shadow-[0_0_50px_rgba(244,114,182,0.35)]">
+        <div class="text-3xl mb-3">💖✨🌹</div>
+        <p id="finalSurpriseMessage" class="text-lg sm:text-2xl font-bold text-white leading-loose mb-6 glow-text">
+          <!-- يُملأ من MESSAGES_DATA -->
+        </p>
+        <div class="h-px w-32 mx-auto bg-gradient-to-r from-transparent via-pink-300/70 to-transparent mb-4"></div>
+        <p id="finalSignature" class="text-sm sm:text-base font-extrabold text-pink-200 tracking-wide">
+          <!-- يُملأ من MESSAGES_DATA -->
+        </p>
+
+        <!-- صف ورود صغيرة متفتحة أسفل الرسالة -->
+        <div class="flex items-center justify-center gap-3 mt-5 text-2xl animate-bounce">
+          <span>🌷</span><span>💜</span><span>🌹</span><span>✨</span><span>🌷</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       شريط التنقل السفلي للهواتف (Mobile Bottom Glassmorphic Navigation Bar)
+       ========================================================================== -->
+  <nav aria-label="تنقل الهاتف" class="fixed bottom-0 inset-x-0 z-40 md:hidden px-2 pb-2 pt-1">
+    <div class="glass-card rounded-2xl px-1.5 py-1.5 flex items-center justify-between gap-1">
+      <!-- زر السابق -->
+      <button id="mobilePrevBtn" type="button" aria-label="الشاشة السابقة" class="p-2 rounded-xl text-lavenderSoft hover:bg-white/10 disabled:opacity-30 transition text-xs font-bold">
+        →
+      </button>
+
+      <!-- أيقونات وأسماء الشاشات الخمس -->
+      <div id="mobileNavItems" class="flex-1 grid grid-cols-5 gap-1"></div>
+
+      <!-- زر التالي -->
+      <button id="mobileNextBtn" type="button" aria-label="الشاشة التالية" class="p-2 rounded-xl text-lavenderSoft hover:bg-white/10 disabled:opacity-30 transition text-xs font-bold">
+        ←
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       البرمجة والتفاعل الكامل (Centralized Data + Audio Synth + 5 Screens Logic)
+       ========================================================================== -->
+  <script>
+    /**
+     * ============================================================================
+     * 1. ملف البيانات المركزي (MESSAGES_DATA)
+     * يمكن تعديل جميع النصوص والرسائل وعناوين الشاشات من هذا الكائن فقط بسهولة تامة
+     * ============================================================================
+     */
+    const MESSAGES_DATA = {
+      screens: [
+        { id: 1, shortTitle: "البوابة", icon: "🌙", fullTitle: "بوابة عالم نور" },
+        { id: 2, shortTitle: "الحديقة", icon: "🌷", fullTitle: "حديقة نور السحرية" },
+        { id: 3, shortTitle: "اللعبة", icon: "💜", fullTitle: "لعبة تطابق القلوب" },
+        { id: 4, shortTitle: "الأمنيات", icon: "🌠", fullTitle: "سماء الأمنيات" },
+        { id: 5, shortTitle: "المفاجأة", icon: "❤️", fullTitle: "المفاجأة الأخيرة" }
+      ],
+
+      // نصوص الشاشة الأولى: بوابة عالم نور
+      screen1: {
+        welcomeTitle: "مرحباً بكِ في عالمك السحري يا نور",
+        subtitle: "عالم صغير صُنع بكل حب ليحمل لكِ الورود، النجوم، وأجمل اللحظات...",
+        buttonLabel: "اكتشفي عالمك ✨"
+      },
+
+      // نصوص الشاشة الثانية: حديقة نور السحرية (الرسائل الثلاث المطلوبة)
+      screen2: {
+        title: "حديقة نور السحرية",
+        hint: "المسي الورود المضيئة لتتفتح وتبوح لكِ بما في القلب، أو اجعلي الحديقة بأكملها تزهر",
+        bloomAllButton: "اجعلي الحديقة تتفتح 🌷",
+        roses: [
+          {
+            id: 1,
+            label: "وردة البنفسج",
+            color: "#c084fc",
+            message: "وجودك لحاله بيخلي الدنيا أجمل."
+          },
+          {
+            id: 2,
+            label: "وردة الجوري",
+            color: "#f472b6",
+            message: "لو الجمال ورد، فأنتِ أجمل حديقة."
+          },
+          {
+            id: 3,
+            label: "وردة الفجر",
+            color: "#e879f9",
+            message: "في أشياء حلوة بالدنيا، وأنتِ من أحلاها."
+          }
+        ]
+      },
+
+      // نصوص الشاشة الثالثة: لعبة تطابق القلوب
+      screen3: {
+        title: "لعبة تطابق القلوب",
+        winMessage: "يا سلام عليكِ يا نور! فزتِ باللعبة! 💜",
+        emojis: ["❤️", "🌹", "🦋", "⭐", "🌙", "💜"]
+      },
+
+      // نصوص الشاشة الرابعة: سماء الأمنيات
+      screen4: {
+        prompt: "لكل شخص أمنية جميلة، شو أمنيتك يا نور؟",
+        anotherWishButton: "أريد أمنية أخرى ✨",
+        wishes: [
+          "أتمنى لكِ أياماً تشبه نقاء قلبك، مليئة بالطمأنينة والفرح الذي لا ينتهي.",
+          "يا رب تتحقق كل أمنياتك الصغيرة والكبيرة، وتبقى ابتسامتك تضيء كل مكان تكونين فيه.",
+          "أتمنى أن يحمل لكِ المستقبل أجمل الصدف، وألطف الأقدار، وراحة بال دائمة.",
+          "كل نجمة في هذه السماء تتمنى لكِ سعادة بحجم الكون وأكثر يا نور.",
+          "أتمنى أن تبقي دائماً مشرقة، متألقة، ومميزة كما أنتِ تماماً."
+        ]
+      },
+
+      // نصوص الشاشة الخامسة: المفاجأة الأخيرة
+      screen5: {
+        leadText: "وصلتي لنهاية رحلتك يا نور...",
+        revealButton: "اكتشفي مفاجأتك ❤️",
+        finalMessage: "نور، يمكن هالعالم كله مجرد شاشة، بس كل تفصيلة فيه انعملت عشانك، لأنك شخص إلك مكانة خاصة، وبتستاهلي كل الأشياء الحلوة بالدنيا. ❤️",
+        signature: "صُنِع هذا العالم الصغير بحب، من أيهم إلى نور."
+      }
+    };
+
+    /**
+     * ============================================================================
+     * 2. مولّد الموسيقى الهادئة المدمج (Web Audio API Ambient Piano Synthesizer)
+     * يعمل بدون روابط خارجية، يستمر عبر جميع الشاشات، ويحترم سياسات التشغيل التلقائي
+     * ============================================================================
+     */
+    class AmbientPianoPlayer {
+      constructor() {
+        this.ctx = null;
+        this.masterGain = null;
+        this.isPlaying = false;
+        this.volume = 0.25;
+        this.intervalId = null;
+        this.step = 0;
+
+        // تدرج نغمات بيانو حالمة وهادئة (Fmaj7 -> Dm7 -> Bbmaj7 -> Csus4)
+        this.chords = [
+          [174.61, 220.00, 261.63, 329.63, 392.00], // Fmaj9
+          [146.83, 220.00, 261.63, 329.63, 349.23], // Dm9
+          [116.54, 174.61, 220.00, 261.63, 349.23], // Bbmaj7
+          [130.81, 196.00, 261.63, 293.66, 392.00]  // Csus2
+        ];
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioCtx();
+          this.masterGain = this.ctx.createGain();
+          this.masterGain.gain.setValueAtTime(this.volume * 0.45, this.ctx.currentTime);
+          this.masterGain.connect(this.ctx.destination);
+        }
+        if (this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      playSoftNote(freq, duration = 2.6) {
+        if (!this.ctx || !this.isPlaying) return;
+        const now = this.ctx.currentTime;
+
+        const osc = this.ctx.createOscillator();
+        const overtone = this.ctx.createOscillator();
+        const noteGain = this.ctx.createGain();
+        const filter = this.ctx.createBiquadFilter();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now);
+
+        overtone.type = 'triangle';
+        overtone.frequency.setValueAtTime(freq * 2, now);
+
+        const overtoneGain = this.ctx.createGain();
+        overtoneGain.gain.setValueAtTime(0.06, now);
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(950, now);
+
+        noteGain.gain.setValueAtTime(0.0001, now);
+        noteGain.gain.exponentialRampToValueAtTime(0.22, now + 0.08);
+        noteGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+        osc.connect(filter);
+        overtone.connect(overtoneGain);
+        overtoneGain.connect(filter);
+        filter.connect(noteGain);
+        noteGain.connect(this.masterGain);
+
+        osc.start(now);
+        overtone.start(now);
+        osc.stop(now + duration + 0.05);
+        overtone.stop(now + duration + 0.05);
+      }
+
+      start() {
+        this.init();
+        if (this.isPlaying) return;
+        this.isPlaying = true;
+        this.updateUI();
+
+        const triggerStep = () => {
+          if (!this.isPlaying) return;
+          const chordIndex = Math.floor(this.step / 5) % this.chords.length;
+          const noteIndex = this.step % 5;
+          const freq = this.chords[chordIndex][noteIndex];
+          this.playSoftNote(freq, 3.0);
+          this.step++;
+        };
+
+        triggerStep();
+        this.intervalId = setInterval(triggerStep, 780);
+      }
+
+      pause() {
+        this.isPlaying = false;
+        if (this.intervalId) {
+          clearInterval(this.intervalId);
+          this.intervalId = null;
+        }
+        this.updateUI();
+      }
+
+      toggle() {
+        if (this.isPlaying) {
+          this.pause();
+        } else {
+          this.start();
+        }
+      }
+
+      setVolume(val) {
+        this.volume = Math.max(0, Math.min(1, val));
+        if (this.masterGain && this.ctx) {
+          this.masterGain.gain.setTargetAtTime(this.volume * 0.45, this.ctx.currentTime, 0.05);
+        }
+        this.updateUI();
+      }
+
+      updateUI() {
+        const icon = document.getElementById('musicIcon');
+        const statusText = document.getElementById('musicStatusText');
+        if (this.isPlaying && this.volume > 0) {
+          icon.textContent = '🎵';
+          if (statusText) statusText.textContent = 'يعمل الآن';
+        } else {
+          icon.textContent = '🔇';
+          if (statusText) statusText.textContent = 'موسيقى هادئة';
+        }
+      }
+    }
+
+    const pianoPlayer = new AmbientPianoPlayer();
+
+    /**
+     * ============================================================================
+     * 3. التأثيرات البصرية الخلفية (النجوم، اليراعات، بتلات الورد، انفجار القلوب)
+     * ============================================================================
+     */
+    const canvas = document.getElementById('ambientCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const stars = Array.from({ length: 75 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 1.8 + 0.5,
+      alpha: Math.random(),
+      speed: Math.random() * 0.018 + 0.005
+    }));
+
+    const fireflies = Array.from({ length: 18 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.45,
+      vy: (Math.random() - 0.5) * 0.45,
+      r: Math.random() * 2.5 + 1.5,
+      phase: Math.random() * Math.PI * 2
+    }));
+
+    const petals = Array.from({ length: 14 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: Math.random() * 6 + 4,
+      vy: Math.random() * 0.65 + 0.25,
+      vx: (Math.random() - 0.5) * 0.4,
+      angle: Math.random() * Math.PI * 2,
+      spin: (Math.random() - 0.5) * 0.02,
+      color: Math.random() > 0.5 ? 'rgba(244, 114, 182, 0.35)' : 'rgba(192, 132, 252, 0.35)'
+    }));
+
+    let celebrationParticles = [];
+    let shootingStars = [];
+
+    function spawnCelebration(count = 45, originX = width / 2, originY = height / 2) {
+      const symbols = ['❤️', '💜', '✨', '🌸', '⭐'];
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 4.5 + 1.5;
+        celebrationParticles.push({
+          x: originX,
+          y: originY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 1.5,
+          life: 1,
+          decay: Math.random() * 0.012 + 0.008,
+          symbol: symbols[Math.floor(Math.random() * symbols.length)],
+          size: Math.random() * 14 + 14
+        });
+      }
+    }
+
+    function spawnShootingStar() {
+      shootingStars.push({
+        x: Math.random() * width * 0.8 + width * 0.1,
+        y: Math.random() * height * 0.35,
+        vx: -(Math.random() * 6 + 6),
+        vy: Math.random() * 3 + 2.5,
+        length: Math.random() * 70 + 50,
+        life: 1
+      });
+    }
+
+    function renderAmbient() {
+      ctx.clearRect(0, 0, width, height);
+
+      // رسم النجوم المتلألئة
+      for (const s of stars) {
+        s.alpha += s.speed;
+        const opacity = 0.25 + Math.abs(Math.sin(s.alpha)) * 0.75;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(253, 244, 255, ${opacity})`;
+        ctx.fill();
+      }
+
+      // رسم اليراعات المضيئة
+      for (const f of fireflies) {
+        f.x += f.vx;
+        f.y += f.vy;
+        f.phase += 0.03;
+        if (f.x < 0) f.x = width;
+        if (f.x > width) f.x = 0;
+        if (f.y < 0) f.y = height;
+        if (f.y > height) f.y = 0;
+
+        const glow = 0.3 + Math.abs(Math.sin(f.phase)) * 0.7;
+        const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r * 4);
+        grad.addColorStop(0, `rgba(251, 207, 232, ${glow})`);
+        grad.addColorStop(1, 'rgba(192, 132, 252, 0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r * 4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // رسم بتلات الورود المتساقطة بنعومة
+      for (const p of petals) {
+        p.y += p.vy;
+        p.x += p.vx + Math.sin(p.angle) * 0.3;
+        p.angle += p.spin;
+        if (p.y > height + 10) {
+          p.y = -10;
+          p.x = Math.random() * width;
+        }
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, p.size, p.size * 0.55, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // رسم الشهب الساقطة
+      for (let i = shootingStars.length - 1; i >= 0; i--) {
+        const st = shootingStars[i];
+        st.x += st.vx;
+        st.y += st.vy;
+        st.life -= 0.022;
+        if (st.life <= 0) {
+          shootingStars.splice(i, 1);
+          continue;
+        }
+        const grad = ctx.createLinearGradient(st.x, st.y, st.x - st.vx * 8, st.y - st.vy * 8);
+        grad.addColorStop(0, `rgba(255, 255, 255, ${st.life})`);
+        grad.addColorStop(1, 'rgba(192, 132, 252, 0)');
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        ctx.moveTo(st.x, st.y);
+        ctx.lineTo(st.x - st.vx * 8, st.y - st.vy * 8);
+        ctx.stroke();
+      }
+
+      // رسم جزيئات الاحتفال بالقلوب والنجوم
+      for (let i = celebrationParticles.length - 1; i >= 0; i--) {
+        const cp = celebrationParticles[i];
+        cp.x += cp.vx;
+        cp.y += cp.vy;
+        cp.vy += 0.04;
+        cp.life -= cp.decay;
+        if (cp.life <= 0) {
+          celebrationParticles.splice(i, 1);
+          continue;
+        }
+        ctx.globalAlpha = Math.max(0, cp.life);
+        ctx.font = `${cp.size}px sans-serif`;
+        ctx.fillText(cp.symbol, cp.x, cp.y);
+        ctx.globalAlpha = 1;
+      }
+
+      requestAnimationFrame(renderAmbient);
+    }
+
+    /**
+     * ============================================================================
+     * 4. نظام التنقل المتكامل بين الشاشات الخمس (5-Screen Navigation System)
+     * ============================================================================
+     */
+    let currentScreen = 1;
+    const totalScreens = 5;
+
+    function buildNavigation() {
+      const desktopContainer = document.getElementById('desktopNavItems');
+      const mobileContainer = document.getElementById('mobileNavItems');
+      desktopContainer.innerHTML = '';
+      mobileContainer.innerHTML = '';
+
+      MESSAGES_DATA.screens.forEach((scr) => {
+        // أزرار الكمبيوتر
+        const dBtn = document.createElement('button');
+        dBtn.type = 'button';
+        dBtn.dataset.screenNav = scr.id;
+        dBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer';
+        dBtn.innerHTML = `<span>${scr.icon}</span><span>${scr.shortTitle}</span>`;
+        dBtn.addEventListener('click', () => goToScreen(scr.id));
+        desktopContainer.appendChild(dBtn);
+
+        // أزرار الهاتف
+        const mBtn = document.createElement('button');
+        mBtn.type = 'button';
+        mBtn.dataset.screenNav = scr.id;
+        mBtn.className = 'py-1.5 px-1 rounded-xl flex flex-col items-center justify-center transition cursor-pointer';
+        mBtn.innerHTML = `
+          <span class="text-base leading-none mb-0.5">${scr.icon}</span>
+          <span class="text-[10px] font-bold leading-tight">${scr.shortTitle}</span>
+        `;
+        mBtn.addEventListener('click', () => goToScreen(scr.id));
+        mobileContainer.appendChild(mBtn);
+      });
+    }
+
+    function goToScreen(screenNum) {
+      if (screenNum < 1 || screenNum > totalScreens) return;
+      currentScreen = screenNum;
+
+      // إخفاء جميع الشاشات ثم إظهار الشاشة المختارة بسلاسة
+      document.querySelectorAll('.screen-section').forEach((sec) => {
+        sec.classList.remove('visible');
+        sec.classList.remove('active');
+      });
+
+      const target = document.getElementById(`screen-${screenNum}`);
+      if (target) {
+        target.classList.add('active');
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            target.classList.add('visible');
+          });
+        });
+      }
+
+      // تحديث شريط التقدم والمؤشرات
+      const pct = (screenNum / totalScreens) * 100;
+      document.getElementById('desktopProgressBar').style.width = `${pct}%`;
+      document.getElementById('mobileProgressBar').style.width = `${pct}%`;
+      document.getElementById('desktopProgressLabel').textContent = `المرحلة ${screenNum} من ${totalScreens}`;
+      document.getElementById('mobileProgressBadge').textContent = `${screenNum} / ${totalScreens}`;
+
+      // تحديث حالة أزرار التنقل
+      document.querySelectorAll('[data-screen-nav]').forEach((btn) => {
+        const isActive = Number(btn.dataset.screenNav) === screenNum;
+        if (isActive) {
+          btn.classList.add('bg-gradient-to-r', 'from-purple-600/80', 'to-pink-500/80', 'text-white', 'shadow');
+          btn.classList.remove('text-lavenderSoft/75', 'hover:bg-white/10');
+        } else {
+          btn.classList.remove('bg-gradient-to-r', 'from-purple-600/80', 'to-pink-500/80', 'text-white', 'shadow');
+          btn.classList.add('text-lavenderSoft/75', 'hover:bg-white/10');
+        }
+      });
+
+      // تحديث أزرار السابق والتالي
+      document.getElementById('desktopPrevBtn').disabled = screenNum === 1;
+      document.getElementById('desktopNextBtn').disabled = screenNum === totalScreens;
+      document.getElementById('mobilePrevBtn').disabled = screenNum === 1;
+      document.getElementById('mobileNextBtn').disabled = screenNum === totalScreens;
+
+      // إذا وصلت للشاشة الرابعة نطلق شهاباً ترحيبياً
+      if (screenNum === 4) {
+        spawnShootingStar();
+      }
+    }
+
+    /**
+     * ============================================================================
+     * 5. منطق الشاشة الأولى: بوابة عالم نور (Screen 1 Logic)
+     * ============================================================================
+     */
+    function initScreen1() {
+      document.getElementById('gateWelcomeTitle').textContent = MESSAGES_DATA.screen1.welcomeTitle;
+      document.getElementById('gateSubtitle').textContent = MESSAGES_DATA.screen1.subtitle;
+      document.getElementById('gateButtonLabel').textContent = MESSAGES_DATA.screen1.buttonLabel;
+
+      const enterBtn = document.getElementById('enterWorldBtn');
+      const gateWrapper = document.getElementById('magicalGateWrapper');
+
+      enterBtn.addEventListener('click', () => {
+        // تشغيل الموسيقى الهادئة عند أول تفاعل
+        pianoPlayer.start();
+
+        // فتح البوابة بتأثير سحري وإطلاق جزيئات مضيئة
+        gateWrapper.classList.add('gate-opened');
+        spawnCelebration(35, width / 2, height * 0.42);
+
+        setTimeout(() => {
+          goToScreen(2);
+          // إعادة وضع البوابة في حال العودة إليها لاحقاً
+          setTimeout(() => gateWrapper.classList.remove('gate-opened'), 600);
+        }, 1050);
+      });
+    }
+
+    /**
+     * ============================================================================
+     * 6. منطق الشاشة الثانية: حديقة نور السحرية (Screen 2 Logic)
+     * ============================================================================
+     */
+    const bloomedRoseIds = new Set();
+
+    function initScreen2() {
+      document.getElementById('gardenTitle').textContent = MESSAGES_DATA.screen2.title;
+      document.getElementById('gardenHint').textContent = MESSAGES_DATA.screen2.hint;
+      const bloomAllBtn = document.getElementById('bloomAllBtn');
+      bloomAllBtn.textContent = MESSAGES_DATA.screen2.bloomAllButton;
+
+      const container = document.getElementById('rosesContainer');
+      container.innerHTML = '';
+
+      MESSAGES_DATA.screen2.roses.forEach((rose, idx) => {
+        const roseWrapper = document.createElement('button');
+        roseWrapper.type = 'button';
+        roseWrapper.id = `rose-node-${rose.id}`;
+        roseWrapper.className = 'rose-item sway-breeze flex flex-col items-center focus:outline-none group';
+        roseWrapper.style.animationDelay = `${idx * 0.7}s`;
+        roseWrapper.setAttribute('aria-label', rose.label);
+
+        roseWrapper.innerHTML = `
+          <svg viewBox="0 0 120 170" class="w-24 h-36 sm:w-32 sm:h-44 overflow-visible">
+            <!-- الساق والأوراق -->
+            <path d="M60 75 Q56 120 60 165" stroke="#34d399" stroke-width="4" fill="none" stroke-linecap="round" />
+            <path d="M60 122 Q35 110 30 125 Q45 136 60 126" fill="#10b981" opacity="0.85" />
+            <path d="M60 105 Q85 92 90 108 Q75 118 60 109" fill="#34d399" opacity="0.85" />
+
+            <!-- بتلات الوردة المتفتحة -->
+            <g class="rose-petal-outer">
+              <circle cx="60" cy="54" r="28" fill="${rose.color}" opacity="0.28" />
+              <path d="M60 22 C40 22, 28 42, 42 62 C52 74, 68 74, 78 62 C92 42, 80 22, 60 22 Z" fill="${rose.color}" />
+              <path d="M60 28 C46 28, 38 44, 48 58 C55 66, 65 66, 72 58 C82 44, 74 28, 60 28 Z" fill="#fbcfe8" opacity="0.55" />
+              <circle cx="60" cy="48" r="10" fill="#fdf4ff" opacity="0.85" />
+            </g>
+          </svg>
+          <span class="mt-1 px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold bg-white/10 text-lavenderSoft group-hover:bg-pink-500/30 transition">
+            ${rose.label}
+          </span>
+        `;
+
+        roseWrapper.addEventListener('click', (e) => {
+          bloomSingleRose(rose, roseWrapper, e);
+        });
+
+        container.appendChild(roseWrapper);
+      });
+
+      // زر تفتيح الحديقة بالكامل
+      bloomAllBtn.addEventListener('click', () => {
+        MESSAGES_DATA.screen2.roses.forEach((rose, index) => {
+          setTimeout(() => {
+            const el = document.getElementById(`rose-node-${rose.id}`);
+            bloomedRoseIds.add(rose.id);
+            if (el) el.classList.add('bloomed');
+            document.getElementById('gardenRoseCounter').textContent = `الورود المتفتحة: ${bloomedRoseIds.size} / ${MESSAGES_DATA.screen2.roses.length}`;
+
+            if (index === MESSAGES_DATA.screen2.roses.length - 1) {
+              document.getElementById('gardenCardIcon').textContent = '💐';
+              document.getElementById('gardenMessageText').textContent =
+                "تفتحت الحديقة كلها لأجلكِ يا نور... لأن وجودك هو الربيع الحقيقي لهذا المكان.";
+              spawnCelebration(45, width / 2, height * 0.52);
+            }
+          }, index * 360);
+        });
+      });
+    }
+
+    function bloomSingleRose(rose, element, event) {
+      bloomedRoseIds.add(rose.id);
+      element.classList.add('bloomed');
+
+      const msgText = document.getElementById('gardenMessageText');
+      const msgIcon = document.getElementById('gardenCardIcon');
+      const counter = document.getElementById('gardenRoseCounter');
+
+      msgIcon.textContent = '🌹';
+      msgText.textContent = `« ${rose.message} »`;
+      counter.textContent = `الورود المتفتحة: ${bloomedRoseIds.size} / ${MESSAGES_DATA.screen2.roses.length}`;
+
+      const rect = element.getBoundingClientRect();
+      spawnCelebration(18, rect.left + rect.width / 2, rect.top + rect.height / 3);
+    }
+
+    /**
+     * ============================================================================
+     * 7. منطق الشاشة الثالثة: لعبة تطابق القلوب (Heart Memory Game)
+     * تحفظ حالتها عند التنقل بين الشاشات وتمنع النقر المزدوج أو كشف أكثر من بطاقتين
+     * ============================================================================
+     */
+    const memoryState = {
+      cards: [],
+      flippedIndices: [],
+      matchedPairs: 0,
+      moves: 0,
+      seconds: 0,
+      timerInterval: null,
+      started: false,
+      locked: false
+    };
+
+    function formatTime(sec) {
+      const m = String(Math.floor(sec / 60)).padStart(2, '0');
+      const s = String(sec % 60).padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    function startMemoryTimer() {
+      if (memoryState.timerInterval) return;
+      memoryState.started = true;
+      memoryState.timerInterval = setInterval(() => {
+        memoryState.seconds++;
+        document.getElementById('gameTimer').textContent = formatTime(memoryState.seconds);
+      }, 1000);
+    }
+
+    function stopMemoryTimer() {
+      if (memoryState.timerInterval) {
+        clearInterval(memoryState.timerInterval);
+        memoryState.timerInterval = null;
+      }
+    }
+
+    function setupMemoryGame() {
+      stopMemoryTimer();
+      const baseEmojis = MESSAGES_DATA.screen3.emojis;
+      const deck = [...baseEmojis, ...baseEmojis]
+        .map((emoji, index) => ({ id: index, emoji, matched: false, flipped: false }))
+        .sort(() => Math.random() - 0.5);
+
+      memoryState.cards = deck;
+      memoryState.flippedIndices = [];
+      memoryState.matchedPairs = 0;
+      memoryState.moves = 0;
+      memoryState.seconds = 0;
+      memoryState.started = false;
+      memoryState.locked = false;
+
+      document.getElementById('gameTitle').textContent = MESSAGES_DATA.screen3.title;
+      document.getElementById('gameWinText').textContent = MESSAGES_DATA.screen3.winMessage;
+      document.getElementById('gameMoves').textContent = '0';
+      document.getElementById('gameTimer').textContent = '00:00';
+      document.getElementById('gamePairs').textContent = `0 / ${baseEmojis.length}`;
+      document.getElementById('gameWinBanner').classList.add('hidden');
+
+      renderMemoryGrid();
+    }
+
+    function renderMemoryGrid() {
+      const grid = document.getElementById('memoryGrid');
+      grid.innerHTML = '';
+
+      memoryState.cards.forEach((card, idx) => {
+        const cardEl = document.createElement('button');
+        cardEl.type = 'button';
+        cardEl.className = `memory-card ${card.flipped ? 'flipped' : ''} ${card.matched ? 'matched' : ''}`;
+        cardEl.setAttribute('aria-label', 'بطاقة ذاكرة');
+        cardEl.innerHTML = `
+          <div class="memory-card-inner">
+            <div class="memory-card-face memory-card-back">
+              <span class="text-xl sm:text-2xl text-lavenderSoft/75">✨</span>
+            </div>
+            <div class="memory-card-face memory-card-front">
+              <span class="text-2xl sm:text-4xl select-none">${card.emoji}</span>
+            </div>
+          </div>
+        `;
+
+        cardEl.addEventListener('click', () => handleCardFlip(idx));
+        grid.appendChild(cardEl);
+      });
+    }
+
+    function handleCardFlip(index) {
+      if (memoryState.locked) return;
+      const card = memoryState.cards[index];
+      if (!card || card.flipped || card.matched) return;
+      if (memoryState.flippedIndices.length >= 2) return;
+
+      if (!memoryState.started) {
+        startMemoryTimer();
+      }
+
+      card.flipped = true;
+      memoryState.flippedIndices.push(index);
+      renderMemoryGrid();
+
+      if (memoryState.flippedIndices.length === 2) {
+        memoryState.moves++;
+        document.getElementById('gameMoves').textContent = String(memoryState.moves);
+        memoryState.locked = true;
+
+        const [firstIdx, secondIdx] = memoryState.flippedIndices;
+        const firstCard = memoryState.cards[firstIdx];
+        const secondCard = memoryState.cards[secondIdx];
+
+        if (firstCard.emoji === secondCard.emoji) {
+          // تطابق صحيح
+          firstCard.matched = true;
+          secondCard.matched = true;
+          memoryState.matchedPairs++;
+          memoryState.flippedIndices = [];
+          memoryState.locked = false;
+
+          document.getElementById('gamePairs').textContent =
+            `${memoryState.matchedPairs} / ${MESSAGES_DATA.screen3.emojis.length}`;
+          renderMemoryGrid();
+
+          // التحقق من الفوز الكامل
+          if (memoryState.matchedPairs === MESSAGES_DATA.screen3.emojis.length) {
+            stopMemoryTimer();
+            document.getElementById('gameWinBanner').classList.remove('hidden');
+            spawnCelebration(60, width / 2, height * 0.45);
+          }
+        } else {
+          // عدم تطابق: إعادة البطاقتين بعد مهلة قصيرة
+          setTimeout(() => {
+            firstCard.flipped = false;
+            secondCard.flipped = false;
+            memoryState.flippedIndices = [];
+            memoryState.locked = false;
+            renderMemoryGrid();
+          }, 780);
+        }
+      }
+    }
+
+    /**
+     * ============================================================================
+     * 8. منطق الشاشة الرابعة: سماء الأمنيات (Screen 4: The Wishing Stars)
+     * ============================================================================
+     */
+    let currentWishIndex = -1;
+
+    function initScreen4() {
+      document.getElementById('wishesMainPrompt').textContent = MESSAGES_DATA.screen4.prompt;
+      const anotherBtn = document.getElementById('anotherWishBtn');
+      anotherBtn.textContent = MESSAGES_DATA.screen4.anotherWishButton;
+
+      const container = document.getElementById('wishingStarsContainer');
+      container.innerHTML = '';
+
+      // مواقع موزعة بأناقة داخل سماء الأمنيات
+      const positions = [
+        { top: '22%', right: '18%' },
+        { top: '34%', right: '48%' },
+        { top: '20%', right: '76%' },
+        { top: '62%', right: '28%' },
+        { top: '58%', right: '68%' }
+      ];
+
+      MESSAGES_DATA.screen4.wishes.forEach((wishText, idx) => {
+        const pos = positions[idx % positions.length];
+        const starBtn = document.createElement('button');
+        starBtn.type = 'button';
+        starBtn.dataset.wishIdx = idx;
+        starBtn.className = 'wishing-star-btn absolute p-3 flex flex-col items-center justify-center focus:outline-none';
+        starBtn.style.top = pos.top;
+        starBtn.style.right = pos.right;
+        starBtn.setAttribute('aria-label', `نجمة الأمنية ${idx + 1}`);
+        starBtn.innerHTML = `
+          <span class="text-2xl sm:text-3xl drop-shadow-[0_0_12px_rgba(255,255,255,0.9)]">⭐</span>
+          <span class="text-[10px] text-pink-200/90 font-bold mt-0.5">نجمة ${idx + 1}</span>
+        `;
+
+        starBtn.addEventListener('click', () => activateWish(idx));
+        container.appendChild(starBtn);
+      });
+
+      anotherBtn.addEventListener('click', () => {
+        const nextIdx = (currentWishIndex + 1) % MESSAGES_DATA.screen4.wishes.length;
+        activateWish(nextIdx);
+      });
+    }
+
+    function activateWish(index) {
+      currentWishIndex = index;
+      const wish = MESSAGES_DATA.screen4.wishes[index];
+
+      document.querySelectorAll('.wishing-star-btn').forEach((btn) => {
+        btn.classList.toggle('active-star', Number(btn.dataset.wishIdx) === index);
+      });
+
+      document.getElementById('wishStarEmoji').textContent = '🌠';
+      document.getElementById('wishMessageDisplay').textContent = wish;
+
+      spawnShootingStar();
+      spawnCelebration(16, width / 2, height * 0.42);
+    }
+
+    /**
+     * ============================================================================
+     * 9. منطق الشاشة الخامسة: المفاجأة الأخيرة (Screen 5: The Final Surprise)
+     * ============================================================================
+     */
+    function initScreen5() {
+      document.getElementById('finalLeadText').textContent = MESSAGES_DATA.screen5.leadText;
+      const revealBtn = document.getElementById('revealSurpriseBtn');
+      revealBtn.textContent = MESSAGES_DATA.screen5.revealButton;
+      document.getElementById('finalSurpriseMessage').textContent = MESSAGES_DATA.screen5.finalMessage;
+      document.getElementById('finalSignature').textContent = MESSAGES_DATA.screen5.signature;
+
+      revealBtn.addEventListener('click', () => {
+        // التأكد من تشغيل الموسيقى الهادئة لإضفاء أجواء ساحرة
+        pianoPlayer.start();
+
+        // توهج القلب الكريستالي وانفجار القلوب والنجوم
+        document.getElementById('crystalHeartContainer').classList.add('awakened');
+        document.getElementById('finalIntroBox').classList.add('hidden');
+        document.getElementById('finalLetterBox').classList.remove('hidden');
+
+        spawnCelebration(85, width / 2, height * 0.45);
+        setTimeout(() => spawnCelebration(45, width * 0.3, height * 0.5), 400);
+        setTimeout(() => spawnCelebration(45, width * 0.7, height * 0.5), 700);
+      });
+    }
+
+    /**
+     * ============================================================================
+     * 10. تهيئة التطبيق بالكامل عند تحميل الصفحة
+     * ============================================================================
+     */
+    window.addEventListener('DOMContentLoaded', () => {
+      buildNavigation();
+      initScreen1();
+      initScreen2();
+      setupMemoryGame();
+      initScreen4();
+      initScreen5();
+
+      // أزرار التنقل (السابق / التالي) للكمبيوتر والهاتف
+      document.getElementById('desktopPrevBtn').addEventListener('click', () => goToScreen(currentScreen - 1));
+      document.getElementById('desktopNextBtn').addEventListener('click', () => goToScreen(currentScreen + 1));
+      document.getElementById('mobilePrevBtn').addEventListener('click', () => goToScreen(currentScreen - 1));
+      document.getElementById('mobileNextBtn').addEventListener('click', () => goToScreen(currentScreen + 1));
+
+      // أزرار الانتقال السريع داخل الشاشات
+      document.querySelectorAll('[data-goto]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          goToScreen(Number(btn.dataset.goto));
+        });
+      });
+
+      // زر إعادة لعبة الذاكرة
+      document.getElementById('resetGameBtn').addEventListener('click', setupMemoryGame);
+
+      // التحكم بالموسيقى ومستوى الصوت
+      document.getElementById('musicToggleBtn').addEventListener('click', () => pianoPlayer.toggle());
+      document.getElementById('volumeSlider').addEventListener('input', (e) => {
+        pianoPlayer.setVolume(Number(e.target.value) / 100);
+      });
+
+      // بدء الشاشة الأولى وتشغيل حلقة المؤثرات البصرية
+      goToScreen(1);
+      renderAmbient();
+
+      // إطلاق شهاب لطيف بشكل دوري في الخلفية
+      setInterval(() => {
+        if (currentScreen === 1 || currentScreen === 4 || currentScreen === 5) {
+          spawnShootingStar();
+        }
+      }, 6500);
+    });
+  </script>
+</body>
+</html>
